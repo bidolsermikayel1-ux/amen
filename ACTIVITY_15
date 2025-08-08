@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+
+public class CourseRegistrationChecker
+{
+    public static void Main(string[] args)
+    {
+        List<string> registeredCourses = new List<string>();
+
+        // Get course codes from the user.
+        for (int i = 0; i < 6; i++)
+        {
+            Console.Write($"Enter course code {i + 1} (5 characters): ");
+            string courseCode = Console.ReadLine().ToUpper(); // Convert to uppercase for consistency.
+
+            // Validate course code.
+            bool isValid = ValidateCourseCode(courseCode, registeredCourses);
+            if (isValid)
+            {
+                registeredCourses.Add(courseCode);
+                Console.WriteLine($"Course '{courseCode}' registered successfully.");
+            }
+            else
+            {
+                Console.WriteLine($"Invalid course code '{courseCode}'.");
+            }
+        }
+
+        // Display registered courses (if any).
+        DisplayRegisteredCourses(registeredCourses);
+
+    }
+
+
+    // Function to validate a course code.
+    static bool ValidateCourseCode(string courseCode, List<string> registeredCourses)
+    {
+        // Check if the course code is 5 characters long.
+        if (courseCode.Length != 5)
+        {
+            return false;
+        }
+
+        // Check if the course code is already registered.
+        if (registeredCourses.Contains(courseCode))
+        {
+            return false;
+        }
+
+        return true; // Course code is valid.
+    }
+
+
+    // Function to display registered courses.
+    static void DisplayRegisteredCourses(List<string> registeredCourses)
+    {
+        Console.WriteLine("\nRegistered Courses:");
+        if (registeredCourses.Count == 0)
+        {
+            Console.WriteLine("No courses registered.");
+        }
+        else
+        {
+            foreach (string courseCode in registeredCourses)
+            {
+                Console.WriteLine(courseCode);
+            }
+        }
+    }
+}

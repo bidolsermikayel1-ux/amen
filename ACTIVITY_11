@@ -1,0 +1,84 @@
+using System;
+using System.Collections.Generic;
+
+public class EmployeeSalaryAdjuster
+{
+    public static void Main(string[] args)
+    {
+        List<string> employeeNames = new List<string>();
+        List<float> salaries = new List<float>();
+
+        // Get employee data from the user.  Input validation is crucial here.
+        int numEmployees = 5; // You can change this number.
+        for (int i = 0; i < numEmployees; i++)
+        {
+            Console.Write($"Enter name for employee {i + 1}: ");
+            employeeNames.Add(Console.ReadLine());
+            Console.Write($"Enter salary for employee {i + 1}: ");
+            while (!float.TryParse(Console.ReadLine(), out float salary) || salary < 0)
+            {
+                Console.WriteLine("Invalid salary. Please enter a non-negative number.");
+            }
+            salaries.Add(salary);
+        }
+
+        // Apply salary adjustments and display results.
+        ProcessSalaryAdjustments(employeeNames, salaries);
+    }
+
+    static void ProcessSalaryAdjustments(List<string> employeeNames, List<float> salaries)
+    {
+        List<float> adjustedSalaries = new List<float>();
+        List<string> highEarners = new List<string>();
+
+        for (int i = 0; i < employeeNames.Count; i++)
+        {
+            float salary = salaries[i];
+            float adjustedSalary;
+
+            if (salary < 15000)
+            {
+                adjustedSalary = salary * 1.05f; // 5% raise
+            }
+            else if (salary >= 15000 && salary <= 30000)
+            {
+                adjustedSalary = salary * 1.03f; // 3% raise
+            }
+            else
+            {
+                adjustedSalary = salary; // No raise
+            }
+
+            adjustedSalaries.Add(adjustedSalary);
+
+            if (adjustedSalary > 25000)
+            {
+                highEarners.Add(employeeNames[i]);
+            }
+        }
+
+        DisplayResults(employeeNames, adjustedSalaries, highEarners);
+    }
+
+    static void DisplayResults(List<string> employeeNames, List<float> adjustedSalaries, List<string> highEarners)
+    {
+        Console.WriteLine("\nAdjusted Salaries:");
+        for (int i = 0; i < employeeNames.Count; i++)
+        {
+            Console.WriteLine($"{employeeNames[i]}: {adjustedSalaries[i]:C}");
+        }
+
+        Console.WriteLine("\nEmployees Earning Above 25,000 After Adjustment:");
+        if (highEarners.Count == 0)
+        {
+            Console.WriteLine("No employees meet this criteria.");
+        }
+        else
+        {
+            foreach (string name in highEarners)
+            {
+                Console.WriteLine(name);
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+
+public class BirthYearToAgeConverter
+{
+    public static void Main(string[] args)
+    {
+        List<string> birthYears = new List<string>();
+        int currentYear = DateTime.Now.Year;
+
+        // Get birth years from the user with input validation.
+        for (int i = 0; i < 5; i++)
+        {
+            Console.Write($"Enter birth year for person {i + 1}: ");
+            string input = Console.ReadLine();
+            while (!int.TryParse(input, out int year) || year <= 0 || year > currentYear)
+            {
+                Console.WriteLine("Invalid input. Please enter a valid year (positive integer).");
+                input = Console.ReadLine();
+            }
+            birthYears.Add(input);
+        }
+
+        // Calculate ages and classifications.
+        DisplayAgesAndClassifications(birthYears, currentYear);
+    }
+
+    static void DisplayAgesAndClassifications(List<string> birthYears, int currentYear)
+    {
+        Console.WriteLine("\nAge and Classification:");
+        foreach (string birthYear in birthYears)
+        {
+            int age = currentYear - Convert.ToInt32(birthYear);
+            string classification;
+            if (age < 18)
+            {
+                classification = "Minor";
+            }
+            else if (age < 65)
+            {
+                classification = "Adult";
+            }
+            else
+            {
+                classification = "Senior";
+            }
+            Console.WriteLine($"Birth Year: {birthYear}, Age: {age}, Classification: {classification}");
+        }
+    }
+}

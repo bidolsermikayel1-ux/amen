@@ -1,0 +1,45 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class CityOrganizer
+{
+    public static void Main(string[] args)
+    {
+        List<string> cities = new List<string>();
+        string input;
+
+        // Get city names from the user until "exit" is entered.
+        Console.WriteLine("Enter city names (type 'exit' to finish):");
+        do
+        {
+            input = Console.ReadLine();
+            if (input.ToLower() != "exit")
+            {
+                cities.Add(input);
+            }
+        } while (input.ToLower() != "exit");
+
+        // Display cities in alphabetical order after removing duplicates.
+        DisplayCities(cities);
+    }
+
+    static void DisplayCities(List<string> cities)
+    {
+        // Use LINQ's Distinct() to remove duplicates and Sort() to sort alphabetically.
+        List<string> uniqueCities = cities.Distinct().OrderBy(city => city).ToList();
+
+        if (uniqueCities.Count == 0)
+        {
+            Console.WriteLine("No cities entered.");
+        }
+        else
+        {
+            Console.WriteLine("\nCities (Alphabetical Order):");
+            foreach (string city in uniqueCities)
+            {
+                Console.WriteLine(city);
+            }
+        }
+    }
+}

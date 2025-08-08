@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+
+public class VowelReplacer
+{
+    public static void Main(string[] args)
+    {
+        List<string> words = new List<string>();
+        List<string> modifiedWords = new List<string>();
+
+        // Get words from the user.
+        int numWords = 5; // You can adjust the number of words.
+        for (int i = 0; i < numWords; i++)
+        {
+            Console.Write($"Enter word {i + 1}: ");
+            words.Add(Console.ReadLine());
+        }
+
+        // Replace vowels and display results.
+        ReplaceVowels(words, modifiedWords);
+    }
+
+    // Function to replace vowels with *.
+    static void ReplaceVowels(List<string> words, List<string> modifiedWords)
+    {
+        foreach (string word in words)
+        {
+            string modifiedWord = "";
+            foreach (char c in word.ToLower())
+            {
+                if ("aeiou".Contains(c))
+                {
+                    modifiedWord += "*";
+                }
+                else
+                {
+                    modifiedWord += c;
+                }
+            }
+            modifiedWords.Add(modifiedWord);
+        }
+
+        DisplayResults(words, modifiedWords);
+    }
+
+    // Function to display original and modified words side by side.
+    static void DisplayResults(List<string> words, List<string> modifiedWords)
+    {
+        Console.WriteLine("\nOriginal and Modified Words:");
+        for (int i = 0; i < words.Count; i++)
+        {
+            Console.WriteLine($"{words[i],-15} {modifiedWords[i]}"); //Formatted output.
+        }
+    }
+}

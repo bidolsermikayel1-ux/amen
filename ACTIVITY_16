@@ -1,0 +1,104 @@
+using System;
+using System.Collections.Generic;
+
+public class ShoppingCartSystem
+{
+    public static void Main(string[] args)
+    {
+        List<string> shoppingCart = new List<string>();
+        int choice;
+
+        // Shopping cart loop.
+        do
+        {
+            // Display menu.
+            Console.WriteLine("\nShopping Cart Menu:");
+            Console.WriteLine("1. Add item");
+            Console.WriteLine("2. Remove item");
+            Console.WriteLine("3. View cart");
+            Console.WriteLine("4. Clear cart");
+            Console.WriteLine("5. Exit");
+            Console.Write("Enter your choice: ");
+
+            // Get user choice with input validation.
+            while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 5)
+            {
+                Console.WriteLine("Invalid choice. Please enter a number between 1 and 5.");
+            }
+
+            // Process user choice.
+            switch (choice)
+            {
+                case 1:
+                    AddItem(shoppingCart);
+                    break;
+                case 2:
+                    RemoveItem(shoppingCart);
+                    break;
+                case 3:
+                    ViewCart(shoppingCart);
+                    break;
+                case 4:
+                    ClearCart(shoppingCart);
+                    break;
+                case 5:
+                    Console.WriteLine("Exiting shopping cart.");
+                    break;
+            }
+        } while (choice != 5);
+    }
+
+    // Function to add an item to the shopping cart.
+    static void AddItem(List<string> shoppingCart)
+    {
+        Console.Write("Enter item name to add: ");
+        shoppingCart.Add(Console.ReadLine());
+        Console.WriteLine("Item added to cart.");
+    }
+
+    // Function to remove an item from the shopping cart.
+    static void RemoveItem(List<string> shoppingCart)
+    {
+        if (shoppingCart.Count == 0)
+        {
+            Console.WriteLine("The cart is empty.");
+            return;
+        }
+
+        ViewCart(shoppingCart); // Show cart contents for easier removal.
+        Console.Write("Enter item name to remove: ");
+        string itemToRemove = Console.ReadLine();
+        if (shoppingCart.Remove(itemToRemove))
+        {
+            Console.WriteLine("Item removed from cart.");
+        }
+        else
+        {
+            Console.WriteLine("Item not found in the cart.");
+        }
+    }
+
+    // Function to view the contents of the shopping cart.
+    static void ViewCart(List<string> shoppingCart)
+    {
+        Console.WriteLine("\nShopping Cart Contents:");
+        if (shoppingCart.Count == 0)
+        {
+            Console.WriteLine("The cart is empty.");
+        }
+        else
+        {
+            foreach (string item in shoppingCart)
+            {
+                Console.WriteLine("- " + item);
+            }
+        }
+    }
+
+    // Function to clear the shopping cart.
+    static void ClearCart(List<string> shoppingCart)
+    {
+        shoppingCart.Clear();
+        Console.WriteLine("Shopping cart cleared.");
+    }
+}

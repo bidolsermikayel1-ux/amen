@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class OnlineAttendanceTracker
+{
+    public static void Main(string[] args)
+    {
+        List<string> attendees = new List<string>();
+        string input;
+
+        // Get student logins from the user until "done" is entered.
+        Console.WriteLine("Enter student logins (type 'done' to finish):");
+        do
+        {
+            input = Console.ReadLine();
+            if (input.ToLower() != "done")
+            {
+                // Add the student only if they haven't logged in already.
+                if (!attendees.Contains(input, StringComparer.OrdinalIgnoreCase))
+                {
+                    attendees.Add(input);
+                }
+            }
+        } while (input.ToLower() != "done");
+
+        // Sort attendees alphabetically and display the results.
+        attendees.Sort(StringComparer.OrdinalIgnoreCase); //Case-insensitive sorting.
+        DisplayAttendance(attendees);
+    }
+
+    // Function to display the attendance report.
+    static void DisplayAttendance(List<string> attendees)
+    {
+        Console.WriteLine($"\nTotal Unique Attendees: {attendees.Count}");
+        Console.WriteLine("\nAttendees (Alphabetical Order):");
+        if (attendees.Count > 0)
+        {
+            foreach (string attendee in attendees)
+            {
+                Console.WriteLine(attendee);
+            }
+        }
+        else
+        {
+            Console.WriteLine("No attendees recorded.");
+        }
+    }
+}

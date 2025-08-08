@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class UsernameFilter
+{
+    public static void Main(string[] args)
+    {
+        // Store usernames (you can modify this list).
+        List<string> usernames = new List<string>() { "Alice123", "BobSmith", "charlie", "David99", "EveBrown" };
+
+        // Get the character to search for from the user.
+        Console.Write("Enter the character to search for: ");
+        string searchChar = Console.ReadLine().ToLower(); // Convert to lowercase for case-insensitive search.
+
+        // Filter and display usernames containing the character.
+        List<string> matchedUsernames = FilterUsernames(usernames, searchChar);
+        DisplayMatchedUsernames(matchedUsernames);
+    }
+
+    // Function to filter usernames based on the specified character.
+    static List<string> FilterUsernames(List<string> usernames, string searchChar)
+    {
+        return usernames.Where(username => username.ToLower().Contains(searchChar)).ToList();
+    }
+
+    // Function to display the matched usernames.
+    static void DisplayMatchedUsernames(List<string> matchedUsernames)
+    {
+        if (matchedUsernames.Count == 0)
+        {
+            Console.WriteLine("No usernames found containing that character.");
+        }
+        else
+        {
+            Console.WriteLine("\nMatched Usernames:");
+            foreach (string username in matchedUsernames)
+            {
+                Console.WriteLine(username);
+            }
+        }
+    }
+}

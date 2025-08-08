@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+
+public class LetterGradeSummary
+{
+    public static void Main(string[] args)
+    {
+        List<int> numericalGrades = new List<int>();
+        Dictionary<string, int> letterGradeCounts = new Dictionary<string, int>()
+        {
+            { "A", 0 }, { "B", 0 }, { "C", 0 }, { "D", 0 }, { "F", 0 }
+        };
+
+        // Get numerical grades from the user with input validation.
+        for (int i = 0; i < 10; i++)
+        {
+            Console.Write($"Enter numerical grade {i + 1} (0-100): ");
+            while (!int.TryParse(Console.ReadLine(), out int grade) || grade < 0 || grade > 100)
+            {
+                Console.WriteLine("Invalid grade. Please enter a number between 0 and 100.");
+            }
+            numericalGrades.Add(grade);
+        }
+
+        // Convert numerical grades to letter grades and count occurrences.
+        ConvertAndCountGrades(numericalGrades, letterGradeCounts);
+
+        // Display the letter grade summary.
+        DisplayGradeSummary(letterGradeCounts);
+    }
+
+    // Function to convert numerical grades to letter grades and count occurrences.
+    static void ConvertAndCountGrades(List<int> numericalGrades, Dictionary<string, int> letterGradeCounts)
+    {
+        foreach (int grade in numericalGrades)
+        {
+            string letterGrade;
+            switch (grade / 10) //Efficient categorization using integer division.
+            {
+                case 10:
+                case 9:
+                    letterGrade = "A";
+                    break;
+                case 8:
+                    letterGrade = "B";
+                    break;
+                case 7:
+                    letterGrade = "C";
+                    break;
+                case 6:
+                    letterGrade = "D";
+                    break;
+                default:
+                    letterGrade = "F";
+                    break;
+            }
+            letterGradeCounts[letterGrade]++;
+        }
+    }
+
+    // Function to display the letter grade summary.
+    static void DisplayGradeSummary(Dictionary<string, int> letterGradeCounts)
+    {
+        Console.WriteLine("\nLetter Grade Summary:");
+        foreach (KeyValuePair<string, int> kvp in letterGradeCounts)
+        {
+            Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+        }
+    }
+}

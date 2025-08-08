@@ -1,0 +1,57 @@
+using System;
+using System.Collections.Generic;
+
+public class InventoryRestocker
+{
+    public static void Main(string[] args)
+    {
+        List<string> productNames = new List<string>();
+        List<int> stockCounts = new List<int>();
+
+        // Get product data from the user with input validation.
+        for (int i = 0; i < 10; i++)
+        {
+            Console.Write($"Enter product name {i + 1}: ");
+            productNames.Add(Console.ReadLine());
+            Console.Write($"Enter stock count for {productNames[i]}: ");
+            while (!int.TryParse(Console.ReadLine(), out int count) || count < 0)
+            {
+                Console.WriteLine("Invalid stock count. Please enter a non-negative integer.");
+            }
+            stockCounts.Add(count);
+        }
+
+        // Restock inventory and display results.
+        ProcessRestock(productNames, stockCounts);
+    }
+
+    static void ProcessRestock(List<string> productNames, List<int> stockCounts)
+    {
+        List<string> restockedItems = new List<string>();
+        List<int> updatedStockCounts = new List<int>();
+
+        for (int i = 0; i < productNames.Count; i++)
+        {
+            int stock = stockCounts[i];
+            int updatedStock = stock;
+            if (stock < 10)
+            {
+                updatedStock += 20; // Restock by 20
+                restockedItems.Add(productNames[i]);
+            }
+            updatedStockCounts.Add(updatedStock);
+        }
+
+        DisplayResults(productNames, updatedStockCounts, restockedItems);
+    }
+
+    static void DisplayResults(List<string> productNames, List<int> updatedStockCounts, List<string> restockedItems)
+    {
+        Console.WriteLine("\nUpdated Inventory:");
+        for (int i = 0; i < productNames.Count; i++)
+        {
+            string restockStatus = restockedItems.Contains(productNames[i]) ? "(Restocked)" : "";
+            Console.WriteLine($"{productNames[i]}: {updatedStockCounts[i]} {restockStatus}");
+        }
+    }
+}

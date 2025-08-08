@@ -1,0 +1,51 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class CapitalCityFinder
+{
+    public static void Main(string[] args)
+    {
+        // Create a list of country-capital pairs.  You can add more entries here.
+        List<KeyValuePair<string, string>> countryCapitalPairs = new List<KeyValuePair<string, string>>()
+        {
+            new KeyValuePair<string, string>("Philippines", "Manila"),
+            new KeyValuePair<string, string>("United States", "Washington, D.C."),
+            new KeyValuePair<string, string>("Canada", "Ottawa"),
+            new KeyValuePair<string, string>("United Kingdom", "London"),
+            new KeyValuePair<string, string>("Japan", "Tokyo"),
+            new KeyValuePair<string, string>("France", "Paris"),
+            new KeyValuePair<string, string>("Germany", "Berlin"),
+            new KeyValuePair<string, string>("Australia", "Canberra")
+        };
+
+        // Get the country name to search for from the user.
+        Console.Write("Enter country name: ");
+        string countryName = Console.ReadLine();
+
+        // Search for the capital and display the result.
+        string capital = FindCapital(countryCapitalPairs, countryName);
+        DisplayCapital(capital, countryName);
+    }
+
+    // Function to find the capital of a country (case-insensitive).
+    static string FindCapital(List<KeyValuePair<string, string>> countryCapitalPairs, string countryName)
+    {
+        // Use LINQ to perform a case-insensitive search.
+        return countryCapitalPairs.FirstOrDefault(pair => pair.Key.Equals(countryName, StringComparison.OrdinalIgnoreCase)).Value;
+
+    }
+
+    // Function to display the capital or a "country not found" message.
+    static void DisplayCapital(string capital, string countryName)
+    {
+        if (string.IsNullOrEmpty(capital))
+        {
+            Console.WriteLine($"Country '{countryName}' not found.");
+        }
+        else
+        {
+            Console.WriteLine($"The capital of {countryName} is {capital}.");
+        }
+    }
+}

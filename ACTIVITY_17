@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class WordAnalyzer
+{
+    public static void Main(string[] args)
+    {
+        List<string> sentences = new List<string>();
+
+        // Get 5 different sentences from the user.
+        for (int i = 0; i < 5; i++)
+        {
+            Console.Write($"Enter sentence {i + 1}: ");
+            sentences.Add(Console.ReadLine());
+        }
+
+        // Extract and count unique words.
+        List<string> uniqueWords = ExtractUniqueWords(sentences);
+        
+        // Display results.
+        DisplayResults(uniqueWords);
+    }
+
+    // Function to extract unique words from sentences.
+    static List<string> ExtractUniqueWords(List<string> sentences)
+    {
+        HashSet<string> uniqueWordsSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase); // HashSet for case-insensitive uniqueness.
+
+        foreach (string sentence in sentences)
+        {
+            // Split the sentence into words, remove punctuation, and add to the HashSet.
+            string[] words = sentence.Split(new char[] { ' ', ',', '.', ';', '!', '?' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string word in words)
+            {
+                uniqueWordsSet.Add(word.ToLower()); // Convert to lowercase for case-insensitivity.
+            }
+        }
+
+        return uniqueWordsSet.ToList(); // Convert HashSet back to List for sorting.
+    }
+
+    // Function to display the results.
+    static void DisplayResults(List<string> uniqueWords)
+    {
+        uniqueWords.Sort(); // Sort the unique words.
+
+        Console.WriteLine($"\nTotal Unique Word Count: {uniqueWords.Count}");
+        Console.WriteLine("Unique Words:");
+        foreach (string word in uniqueWords)
+        {
+            Console.WriteLine(word);
+        }
+    }
+}

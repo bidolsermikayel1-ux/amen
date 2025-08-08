@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class StudentQuizRanker
+{
+    public static void Main(string[] args)
+    {
+        List<string> studentNames = new List<string>();
+        List<int> quizScores = new List<int>();
+
+        // Get student data from the user with input validation.
+        for (int i = 0; i < 10; i++)
+        {
+            Console.Write($"Enter name for student {i + 1}: ");
+            studentNames.Add(Console.ReadLine());
+            Console.Write($"Enter quiz score for {studentNames[i]} (0-100): ");
+            while (!int.TryParse(Console.ReadLine(), out int score) || score < 0 || score > 100)
+            {
+                Console.WriteLine("Invalid score. Please enter a number between 0 and 100.");
+            }
+            quizScores.Add(score);
+        }
+
+        // Sort students by quiz score in descending order.
+        SortStudentsByScore(studentNames, quizScores);
+
+        // Display the top 3 performers.
+        DisplayTopPerformers(studentNames, quizScores);
+    }
+
+
+    // Function to sort students by score in descending order.
+    static void SortStudentsByScore(List<string> studentNames, List<int> quizScores)
+    {
+        //Efficient sorting using LINQ's OrderByDescending.
+        var sortedStudents = studentNames.Zip(quizScores, (name, score) => new { Name = name, Score = score })
+                                        .OrderByDescending(student => student.Score)
+                                        .ToList();
+
+        //Update the lists with the sorted data.
+        studentNames.Clear();
+        quizScores.Clear();
+        foreach (var student in sortedStudents)
+        {
+            studentNames.Add(student.Name);
+            quizScores.Add(student.Score);
+        }
+
+    }
+
+    // Function to display the top 3 performers.
+    static void DisplayTopPerformers(List<string> studentNames, List<int> quizScores)
+    {
+        Console.WriteLine("\nTop 3 Performers:");
+        int numToPrint = Math.Min(3, studentNames.Count); // Handle cases with fewer than 3 students.
+        for (int i = 0; i < numToPrint; i++)
+        {
+            Console.WriteLine($"{i + 1}. {studentNames[i]}: {quizScores[i]}");
+        }
+    }
+}

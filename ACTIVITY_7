@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class ProductSearchEngine
+{
+    public static void Main(string[] args)
+    {
+        // Sample product names (you can modify this list).
+        List<string> products = new List<string>() { "Laptop", "Tablet", "Keyboard", "Mouse", "Monitor", "Headphones", "Webcam", "Printer" };
+
+        // Get the keyword to search for from the user.
+        Console.Write("Enter keyword to search for: ");
+        string keyword = Console.ReadLine().ToLower();
+
+        // Search for matching products and display results.
+        List<string> matchedProducts = SearchProducts(products, keyword);
+        DisplaySearchResults(matchedProducts);
+    }
+
+    // Function to search for products containing the keyword (case-insensitive).
+    static List<string> SearchProducts(List<string> products, string keyword)
+    {
+        return products.Where(product => product.ToLower().Contains(keyword)).ToList();
+    }
+
+    // Function to display search results.
+    static void DisplaySearchResults(List<string> matchedProducts)
+    {
+        if (matchedProducts.Count == 0)
+        {
+            Console.WriteLine("No products found.");
+        }
+        else
+        {
+            Console.WriteLine("\nMatching Products:");
+            foreach (string product in matchedProducts)
+            {
+                Console.WriteLine(product);
+            }
+        }
+    }
+}
